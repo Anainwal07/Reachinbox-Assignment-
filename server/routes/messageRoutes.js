@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { getDrafts, readMail, getMails, createLabel, getLabel } = require("../controllers/msg.Controller");
-const { sendMailViaQueue,sendMultipleEmails } = require("../controllers/queue.controller")
-const { redisGetToken } = require("../middlewares/redis.middleware");
-const { sendMail, getUser }  = require("./googleauth.routes")
+const { getDrafts, readMail, getMails, createLabel, getLabel } = require("../controllers/messageController.js");
+const { sendMailViaQueue,sendMultipleEmails } = require("../controllers/queueController.js")
+const { redisGetToken } = require("../middlewares/redismiddleware.js");
+const { sendMail, getUser }  = require("./googleAuthRoutes.js")
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));

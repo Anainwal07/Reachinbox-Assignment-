@@ -1,13 +1,13 @@
 const axios = require("axios");
 const express = require("express");
 require("dotenv").config();
-const { createConfig } = require("../helpers/utils");
+const { createConfig } = require("../helpers/utils.js");
 const { OAuth2Client } = require("google-auth-library");
-const { connection } = require("../middlewares/redis.middleware");
+const { connection } = require("../middlewares/redismiddleware.js");
 const googleRouter = express.Router();
 const OpenAI = require("openai");
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_SECRECT_KEY });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_SECRET_KEY });
 
 // google oauth
 const oAuth2Client = new OAuth2Client({
@@ -86,7 +86,21 @@ const sendMail = async (data, token) => {
       throw new Error("Token not found, please login again to get token");
     }
 
-    const emailContent = `dont use any name instead use dear user.here you have to create advertisement mail, your reply should provide an enticing advertisement for our ReachInbox platform. Highlight the key features and benefits to capture their interest and encourage them to learn more. Here's a suggested prompt:\n\n'Hello!\n\nWe're thrilled to introduce you to ReachInbox – the ultimate email management platform designed to streamline your communication workflows and boost your productivity.\n\nDiscover how ReachInbox can transform your email experience:\n\n- **Secure Mailing:** Rest assured that your emails are protected with state-of-the-art encryption, keeping your communication private and secure.\n\n- **Automated Emails:** Say goodbye to manual tasks! With ReachInbox, you can automate your email workflows, schedule emails, and set triggers to send messages at the perfect time.\n\n- **Customizable Templates:** Personalize your emails effortlessly! Create stunning templates tailored to your brand and audience, saving you time and effort.\n\nReady to supercharge your email productivity? Reply to this email to learn more about ReachInbox and take your communication to the next level.\n\nDon't miss out on this opportunity to revolutionize your inbox with ReachInbox. Get started today! . give this form of containers heading, features and benefits`;
+    const emailContent = `dont use any name instead use dear user.here you have to create advertisement 
+    mail, your reply should provide an enticing advertisement for our ReachInbox platform. Highlight the 
+    key features and benefits to capture their interest and encourage them to learn more. Here's a 
+    suggested prompt:\n\n'Hello!\n\nWe're thrilled to introduce you to ReachInbox – the ultimate email 
+    management platform designed to streamline your communication workflows and boost your 
+    productivity.\n\nDiscover how ReachInbox can transform your email 
+    experience:\n\n- **Secure Mailing:** Rest assured that your emails are protected with state-of-the-art
+    encryption, keeping your communication private and secure.\n\n- **Automated Emails:** Say goodbye 
+    to manual tasks! With ReachInbox, you can automate your email workflows, schedule emails, and set 
+    triggers to send messages at the perfect time.\n\n- **Customizable Templates:** Personalize your 
+    emails effortlessly! Create stunning templates tailored to your brand and audience, saving you time 
+    and effort.\n\nReady to supercharge your email productivity? Reply to this email to learn more about 
+    ReachInbox and take your communication to the next level.\n\nDon't miss out on this opportunity to 
+    revolutionize your inbox with ReachInbox. Get started today! . give this form of containers heading, 
+    features and benefits`;
 
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo-0301",

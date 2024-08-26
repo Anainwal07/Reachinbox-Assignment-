@@ -8,9 +8,9 @@ const {
     readMail,
     getUser,
     sendMail
-} = require('../controllers/outlookController');
-const { sendOutlookMailViaQueue } = require("../controllers/outlook.queue")
-const { connection, redisGetToken } = require("../middlewares/redis.middleware");
+} = require('../controllers/outlookController.js');
+const { sendOutlookMailViaQueue } = require("../controllers/outlookQueue.js")
+const { connection, redisGetToken } = require("../middlewares/redismiddleware.js");
 outlookRouter.use(express.json());
 outlookRouter.use(express.urlencoded({ extended: true }));
 
@@ -23,15 +23,13 @@ outlookRouter.get('/:email/read-Msg/:message', readMail);
 
 outlookRouter.post("/:email/send-Mail", async (req, res) => {
     try {
-        const token = await redisGetToken(req.params.email);
+      const token = await redisGetToken(req.params.email);
       const result = await sendMail(req.body, token);
       res.status(200).json({ message: "Email sent successfully", result });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  });
+});
 
-  outlookRouter.post("/sendone/:email/:id", sendOutlookMailViaQueue)
-  // });
-  // outlookRouter.post("/sendone/:email/:id", sendOutlookMailViaQueue);
+outlookRouter.post("/sendone/:email/:id", sendOutlookMailViaQueue)
 module.exports = outlookRouter;

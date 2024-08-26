@@ -8,11 +8,6 @@ const { default: OpenAI } = require("openai");
 const { parseAndSendoutlookMail}= require("./controllers/outlook.queue")
 const { parseAndSendMail } = require("./controllers/queue.controller")
 
-
-
-
-
-
 const sendEmail = (data, jobID) =>
   new Promise(async (req, res) => {
     console.log(data)

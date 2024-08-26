@@ -7,9 +7,9 @@ const bodyParser = require("body-parser");
 const app = express();
 require("dotenv").config();
 
-const router = require("./routes/message.Routes");
-const { googleRouter } = require("./routes/googleauth.routes");
-const  outlookRouter  = require("./routes/outlook.Routes");
+const router = require("./routes/messageRoutes.js");
+const { googleRouter } = require("./routes/googleAuthRoutes.js");
+const  outlookRouter  = require("./routes/outlookRoutes.js");
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -33,6 +33,8 @@ app.get("/", async (req, res) => {
    res.redirect("https://documenter.getpostman.com/view/31971527/2sA35D43FE")
 });
 
+const PORT  = process.env.PORT || 5000 ;
+
 app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port http://localhost:${process.env.PORT}`);
+  console.log(`Server is running on port http://localhost:${PORT}`);
 });
